@@ -1,16 +1,7 @@
-# kickstart-flowrouter by thereactivestack
+# Ikura
 
-Kickstart a project with FlowRouter fast!
-
-If you would like a simpler kickstart, see the [kickstart-simple project](https://github.com/thereactivestack/kickstart-simple).
-
-If you would like a more sophisticated kickstart with code splitting, see the [kickstart-hugeapp project](https://github.com/thereactivestack/kickstart-hugeapp).
-
-Clone this project to start a FlowRouter project using Meteor, React.js and Webpack.
-
-1. `git clone https://github.com/thereactivestack/kickstart-flowrouter.git`
-1. `cd kickstart-simple`
-1. `meteor`
+Ikura is a financing app meant as an exercise for Meteor + React.
+Built on top of [kickstart-flowrouter by thereactivestack](https://github.com/thereactivestack/kickstart-flowrouter).
 
 ## The stack & features
 - Include the simple todo app example
