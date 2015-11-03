@@ -1,3 +1,3 @@
-import 'TodoApp/client/routes';
+import 'Ikura/client/routes';
 
 FlowRouter.initialize();
