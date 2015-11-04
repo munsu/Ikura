@@ -1,33 +1,33 @@
 import { Component, PropTypes } from 'react';
 import ReactMixin from 'react-mixin';
-// import LoanEntry from './LoanEntry';
+import LoanEntry from './LoanEntry';
 
-// import Loans from 'Ikura/collections/Loans';
+import Loans from 'Ikura/collections/Loans';
 
-// @ReactMixin.decorate(ReactMeteorData)
+@ReactMixin.decorate(ReactMeteorData)
 export default class ClientEntry extends Component {
   static propTypes = {
     hideCompleted: PropTypes.bool,
     client: PropTypes.object.isRequired
   }
   
-  // getMeteorData() {
-  //   Meteor.subscribe('loans');
+  getMeteorData() {
+    Meteor.subscribe('loans');
 
-  //   let loanFilter = {};
+    let loanFilter = {};
 
-  //   loanFilter.client_id = client._id
-  //   if (this.props.hideCompleted) {
-  //     loanFilter.paid = {$ne: true};
-  //   }
+    loanFilter.client_id = this.props.client._id
+    if (this.props.hideCompleted) {
+      loanFilter.paid = {$ne: true};
+    }
 
-  //   const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
+    const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
 
-  //   return {
-  //     loans,
-  //     user: Meteor.user()
-  //   };
-  // }
+    return {
+      loans,
+      user: Meteor.user()
+    };
+  }
   // handleChecked(e) {
   //   // Set the checked property to the opposite of its current value
   //   Meteor.call('setChecked', this.props.task._id, e.target.checked);
