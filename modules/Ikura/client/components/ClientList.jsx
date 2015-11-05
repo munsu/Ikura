@@ -9,14 +9,13 @@ export default class ClientList extends Component {
 
   render() {
     return (
-      <ul>
-        <li>{this.props.hideCompleted}</li>
+      <div className="list-group">
         {this.props.clients.map(client =>
           <ClientEntry
             hideCompleted={this.props.hideCompleted}
             key={client._id}
             client={client} />)}
-      </ul>
+      </div>
     );
   }
 }

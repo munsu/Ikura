@@ -55,10 +55,10 @@ export default class ClientEntry extends Component {
 
   render() {
     return (
-      <li>
-        <div>{this.props.client.firstName}</div>
+      <a href="#" className="list-group-item">
+        <h4 className="list-group-item-heading">{this.props.client.firstName}</h4>
         
-      </li>
+      </a>
     );
   }
 }

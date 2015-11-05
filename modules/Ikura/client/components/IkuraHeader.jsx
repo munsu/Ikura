@@ -35,16 +35,31 @@ export default class IkuraHeader extends Component {
 
     return (
       <header>
-        <h1>
-          List
-        </h1>
+        <div className="row">
+          <div className="col-md-2 col-md-offset-5">
+            <h1 className="text-center">
+              Ikura
+            </h1>
+          </div>
+          <div className="col-md-1 col-md-offset-4">
+            <LoginButtons align="right" />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-4 col-md-offset-4 input-group">
+            <span className="input-group-addon">
+              <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
+            </span>
+            <input type="text" className="form-control" />
+          </div>
+        </div>
 
         <label className="hide-completed">
           <input type="checkbox" checked={this.props.hideCompleted} onChange={this.props.toggleHideCompleted} />
           Hide Completed Loans
-        </label>
+        </label> <br />
 
-        <LoginButtons />
 
       </header>
     );
