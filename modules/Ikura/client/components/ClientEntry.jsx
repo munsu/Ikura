@@ -13,6 +13,7 @@ export default class ClientEntry extends Component {
   
   getMeteorData() {
     Meteor.subscribe('loans');
+    Meteor.subscribe('userData');
 
     let loanFilter = {};
 
@@ -25,6 +26,7 @@ export default class ClientEntry extends Component {
 
     return {
       loans,
+      agent: Meteor.users.find({_id: this.props.client.agentId}).fetch()[0],
       user: Meteor.user()
     };
   }
@@ -54,11 +56,12 @@ export default class ClientEntry extends Component {
   // }
 
   render() {
+    let modal_id = "#modal-" + this.props.client._id
     return (
-      <a href="#" className="list-group-item">
+      <button type="button" className="list-group-item" data-toggle="modal" data-target={modal_id}>
         <h4 className="list-group-item-heading">{this.props.client.firstName}</h4>
-        
-      </a>
+        <span className="list-group-item-text">{this.data.agent.username}</span>
+      </button>
     );
   }
 }
