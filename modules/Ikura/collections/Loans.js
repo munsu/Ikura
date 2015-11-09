@@ -10,6 +10,7 @@ Loan
 - monthlyAmortization
 - downpayment
 - terms
+- onTimePayment
 - createdAt
 - payments
   - date

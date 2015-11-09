@@ -38,7 +38,7 @@ Meteor.methods({
           payments: {
             _id: new Mongo.ObjectID(),
             date: date,
-            amount: amount,
+            amount: parseFloat(amount),
             recorder: Meteor.userId() } } }
     );
   },
