@@ -2,9 +2,9 @@ import { Component } from 'react';
 import ReactMixin from 'react-mixin';
 
 import IkuraHeader from './components/IkuraHeader';
-import ClientList from './components/ClientList';
+import LoanList from './components/LoanList';
 
-import Clients from 'Ikura/collections/Clients';
+import Loans from 'Ikura/collections/Loans';
 
 @ReactMixin.decorate(ReactMeteorData)
 export default class IkuraMain extends Component {
@@ -14,10 +14,21 @@ export default class IkuraMain extends Component {
   }
 
   getMeteorData() {
+    Meteor.subscribe('loans');
     Meteor.subscribe('clients');
+    Meteor.subscribe('userData');
 
+    let loanFilter = {};
+
+    if (this.state.hideCompleted) {
+      loanFilter.paid = {$ne: true};
+    }
+
+    const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
+
+    console.log(loans)
     return {
-      clients: Clients.find({}).fetch(),
+      loans: loans,
       user: Meteor.user()
     };
   }
@@ -27,7 +38,7 @@ export default class IkuraMain extends Component {
   }
 
   render() {
-    if (!this.data.clients) {
+    if (!this.data.loans) {
       // loading
       return null;
     }
@@ -38,9 +49,8 @@ export default class IkuraMain extends Component {
               hideCompleted={this.state.hideCompleted}
               toggleHideCompleted={this.handleToggleHideCompleted} />
 
-          <ClientList
-              hideCompleted={this.state.hideCompleted}
-              clients={this.data.clients} />
+          <LoanList
+              loans={this.data.loans} />
         </div>
     );
   }

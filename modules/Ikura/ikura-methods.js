@@ -25,19 +25,19 @@ Meteor.methods({
       createdAt: new Date(),  // default thing
     });
   },
-  addPayment: function (loanId, month, year, amount) {
+  addPayment: function (loanId, date, amount) {
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
     // validate month year amount
     // new Date(year, month)
-    const d = new Date(year, month)
     Loans.update(
       loanId,
       {
         $addToSet: {
           payments: {
-            date: d,
+            _id: new Mongo.ObjectID(),
+            date: date,
             amount: amount,
             recorder: Meteor.userId() } } }
     );

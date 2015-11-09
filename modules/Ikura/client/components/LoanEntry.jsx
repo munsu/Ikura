@@ -1,47 +1,30 @@
 import { Component, PropTypes } from 'react';
+import ReactMixin from 'react-mixin';
 
+import Clients from 'Ikura/collections/Clients';
+
+@ReactMixin.decorate(ReactMeteorData)
 export default class LoanEntry extends Component {
   static propTypes = {
     loan: PropTypes.object.isRequired
   }
-
-  handleChecked(e) {
-    // Set the checked property to the opposite of its current value
-    Meteor.call('setDone', this.props.loan._id, e.target.checked);
+  
+  getMeteorData() {
+    const client = Clients.find({_id: this.props.loan.clientId}).fetch()[0];
+    const agent = Meteor.users.find({_id: client.agentId}).fetch()[0];
+    return {
+      client,
+      agent
+    };
   }
 
-  // handleDelete() {
-  //   Meteor.call('deleteTask', this.props.task._id);
-  // }
-
-  // handleSetPrivate() {
-  //   Meteor.call('setPrivate', this.props.task._id, !this.props.task.private);
-  // }
-
-  // renderTogglePrivate() {
-  //   if (Meteor.userId() !== this.props.task.owner) {
-  //     return null;
-  //   }
-
-  //   return (
-  //     <button className="toggle-private" onClick={this.handleSetPrivate.bind(this)}>
-  //       {this.props.task.private ? 'Private' : 'Public'}
-  //     </button>
-  //   );
-  // }
-
   render() {
-    let itemClass = '';
-
-    if (this.props.loan.done) {
-      itemClass += 'checked';
-    }
-
+    let modal_id = "#modal-" + this.props.loan._id
     return (
-      <li className={itemClass}>
-        <input type="checkbox" checked={this.props.loan.done} onChange={this.handleChecked.bind(this)} className="toggle-checked" />
-        <span className="text">{this.props.loan.price}</span>
-      </li>
+      <button type="button" className="list-group-item" data-toggle="modal" data-target={modal_id}>
+        <h4 className="list-group-item-heading">{this.data.client.firstName} - {this.props.loan.amountFinanced}</h4>
+        <span className="list-group-item-text">{this.data.agent.username}</span>
+      </button>
     );
   }
 }

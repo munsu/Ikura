@@ -6,8 +6,8 @@ export default Loans;
 Loan
 - clientId
 - price
-- amtFinanced
-- moAmortization
+- amountFinanced
+- monthlyAmortization
 - downpayment
 - terms
 - createdAt

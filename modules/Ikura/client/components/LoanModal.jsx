@@ -1,71 +1,35 @@
 import { Component, PropTypes } from 'react';
 import ReactMixin from 'react-mixin';
-import LoanEntry from './LoanEntry';
 
-import Loans from 'Ikura/collections/Loans';
+import Clients from 'Ikura/collections/Clients';
 
 @ReactMixin.decorate(ReactMeteorData)
-export default class ClientModal extends Component {
+export default class LoanModal extends Component {
   static propTypes = {
-    client: PropTypes.object.isRequired
+    loan: PropTypes.object.isRequired
   }
-  
+
   getMeteorData() {
-    Meteor.subscribe('loans');
-    Meteor.subscribe('userData');
-
-    let loanFilter = {};
-
-    loanFilter.client_id = this.props.client._id
-    if (this.props.hideCompleted) {
-      loanFilter.paid = {$ne: true};
-    }
-
-    const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
-
     return {
-      loans,
-      user: Meteor.user()
-    };
+      client: Clients.find(this.props.loan.clientId).fetch()[0]
+    }
   }
-  // handleChecked(e) {
-  //   // Set the checked property to the opposite of its current value
-  //   Meteor.call('setChecked', this.props.task._id, e.target.checked);
-  // }
-
-  // handleDelete() {
-  //   Meteor.call('deleteTask', this.props.task._id);
-  // }
-
-  // handleSetPrivate() {
-  //   Meteor.call('setPrivate', this.props.task._id, !this.props.task.private);
-  // }
-
-  // renderTogglePrivate() {
-  //   if (Meteor.userId() !== this.props.task.owner) {
-  //     return null;
-  //   }
-
-  //   return (
-  //     <button className="toggle-private" onClick={this.handleSetPrivate.bind(this)}>
-  //       {this.props.task.private ? 'Private' : 'Public'}
-  //     </button>
-  //   );
-  // }
 
   handleSubmit(event) {
     // Prevent default browser form submit
     event.preventDefault();
 
-    // Get value from form element
-    var text = event.target.month.value;
+    var month = event.target.month.value;
+    var amount = event.target.amount.value;
+    console.log(month)
+    console.log(amount)
+    console.log(this.props.loan.payments)
+    console.log(this.props.info)
+    Meteor.call('addPayment', this.props.loan._id, month, amount);
 
-    // Insert a task into the collection
-    // Meteor.call('addTask', text);
-
-    console.log(text)
     // Clear form
     event.target.month.value = '';
+    event.target.amount.value = '';
   }
 
   loadDate(e) {
@@ -75,17 +39,18 @@ export default class ClientModal extends Component {
 
   // TODO amount default value to 
   render() {
-    let modal_id = "modal-" + this.props.client._id
+    let modal_id = "modal-" + this.props.loan._id
+    let payments = null
     return (
       <div className="modal" id={modal_id} role="dialog">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">Add payment</h4>
+              <h4 className="modal-title">{this.data.client.firstName} {this.data.client.lastName}</h4>
             </div>
             <div className="modal-body">
-              <table className="table table-bordered">
+              <table className="table table-compressed">
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -93,9 +58,11 @@ export default class ClientModal extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                  </tr>
+                  {this.props.loan.payments.map(payment =>
+                    <tr key={payment._id}>
+                      <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
+                      <td>{payment.amount}</td>
+                    </tr>)}
                 </tbody>
               </table>
               <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
