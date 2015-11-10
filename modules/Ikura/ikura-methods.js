@@ -64,3 +64,11 @@ Meteor.methods({
     Loans.update(loanId, { $set: { done: setDone} });
   }
 });
+
+// Helpers
+Loans.helpers({
+  monthlyAmortization: function () {
+    // todo set this somewhere else
+    return ((this.amountFinanced * 0.025 * this.terms) + this.amountFinanced) / this.terms;
+  }
+});

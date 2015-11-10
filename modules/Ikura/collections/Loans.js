@@ -7,7 +7,6 @@ Loan
 - clientId
 - price
 - amountFinanced
-- monthlyAmortization
 - downpayment
 - terms
 - onTimePayment
@@ -15,4 +14,5 @@ Loan
 - payments
   - date
   - amount
+~ monthlyAmortization
 */

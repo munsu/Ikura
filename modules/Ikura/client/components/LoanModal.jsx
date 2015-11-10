@@ -97,7 +97,7 @@ export default class LoanModal extends Component {
                       </tr>
                       <tr>
                         <th>Monthly Amortization</th>
-                        <td>{this.props.loan.monthlyAmortization}</td>
+                        <td>{this.props.loan.monthlyAmortization()}</td>
                       </tr>
                       <tr>
                         <th>On Time Payment</th>
