@@ -65,11 +65,12 @@ export default class LoanModal extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.props.loan.payments.map(payment =>
-                        <tr key={payment._id}>
-                          <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
-                          <td>{payment.amount}</td>
-                        </tr>)}
+                      {this.props.loan.payments.sort((a, b) =>
+                        a.date > b.date ? 1 : -1).map(payment =>
+                          <tr key={payment._id}>
+                            <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
+                            <td>{payment.amount}</td>
+                          </tr>)}
                     </tbody>
                   </table>
                   <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
