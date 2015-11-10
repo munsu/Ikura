@@ -32,6 +32,10 @@ export default class LoanModal extends Component {
     event.target.amount.value = '';
   }
 
+  handleDeletePayment(paymentId) {
+    Meteor.call('removePayment', this.props.loan._id, paymentId);
+  }
+
   loadDate(e) {
     let date = moment().format("YYYY-MM")
     e.target.value = date
@@ -62,6 +66,7 @@ export default class LoanModal extends Component {
                       <tr>
                         <th>Date</th>
                         <th>Amount</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -70,6 +75,7 @@ export default class LoanModal extends Component {
                           <tr key={payment._id}>
                             <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
                             <td>{payment.amount}</td>
+                            <td><button className="delete" onClick={this.handleDeletePayment.bind(this, payment._id)}>&times;</button></td>
                           </tr>)}
                     </tbody>
                   </table>

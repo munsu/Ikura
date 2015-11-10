@@ -29,8 +29,6 @@ Meteor.methods({
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
     }
-    // validate month year amount
-    // new Date(year, month)
     Loans.update(
       loanId,
       {
@@ -40,6 +38,21 @@ Meteor.methods({
             date: date,
             amount: parseFloat(amount),
             recorder: Meteor.userId() } } }
+    );
+  },
+  removePayment: function (loanId, paymentId) {
+    if (! Meteor.userId()) {
+      throw new Meteor.Error('not-authorized');
+    }
+    Loans.update(
+      loanId,
+      {
+        $pull: {
+          payments: {
+            _id: paymentId
+          }
+        }
+      }
     );
   },
   setDone: function (loanId, setDone) {
