@@ -23,12 +23,12 @@ export default class LoanModal extends Component {
     var amount = event.target.amount.value;
     console.log(month)
     console.log(amount)
-    console.log(this.props.loan.payments)
-    console.log(this.props.info)
+    console.log(month > 0)
+    console.log(month == 0)
+
     Meteor.call('addPayment', this.props.loan._id, month, amount);
 
-    // Clear form
-    event.target.month.value = '';
+    // Clear amount input
     event.target.amount.value = '';
   }
 
@@ -36,12 +36,6 @@ export default class LoanModal extends Component {
     Meteor.call('removePayment', this.props.loan._id, paymentId);
   }
 
-  loadDate(e) {
-    let date = moment().format("YYYY-MM")
-    e.target.value = date
-  }
-
-  // TODO amount default value to 
   render() {
     let modal_id = "modal-" + this.props.loan._id
     let payments = null
@@ -66,7 +60,7 @@ export default class LoanModal extends Component {
                       <tr>
                         <th>Date</th>
                         <th>Amount</th>
-                        <th>Delete</th>
+                        <th><span className="glyphicon glyphicon-cog"></span></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -75,13 +69,13 @@ export default class LoanModal extends Component {
                           <tr key={payment._id}>
                             <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
                             <td>{payment.amount}</td>
-                            <td><button className="delete" onClick={this.handleDeletePayment.bind(this, payment._id)}>&times;</button></td>
+                            <td><button className="close" onClick={this.handleDeletePayment.bind(this, payment._id)}>&times;</button></td>
                           </tr>)}
                     </tbody>
                   </table>
                   <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="month" name="month" onClick={this.loadDate.bind(this)} />
-                    <input type="number" name="amount" />
+                    <input type="month" name="month" defaultValue={moment().format("YYYY-MM")} required />
+                    <input type="number" name="amount" required />
                   </form>
                 </div>
               </div>
