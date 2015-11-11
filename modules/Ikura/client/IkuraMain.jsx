@@ -3,6 +3,7 @@ import ReactMixin from 'react-mixin';
 
 import IkuraHeader from './components/IkuraHeader';
 import LoanList from './components/LoanList';
+import LoanForm from './components/LoanForm';
 
 import Loans from 'Ikura/collections/Loans';
 
@@ -48,6 +49,8 @@ export default class IkuraMain extends Component {
           <IkuraHeader
               hideCompleted={this.state.hideCompleted}
               toggleHideCompleted={this.handleToggleHideCompleted} />
+
+          <LoanForm />
 
           <LoanList
               loans={this.data.loans} />

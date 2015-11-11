@@ -60,7 +60,7 @@ export default class LoanModal extends Component {
                       <tr>
                         <th>Date</th>
                         <th>Amount</th>
-                        <th><span className="glyphicon glyphicon-cog"></span></th>
+                        <th><span className="glyphicon glyphicon-cog pull-right"></span></th>
                       </tr>
                     </thead>
                     <tbody>

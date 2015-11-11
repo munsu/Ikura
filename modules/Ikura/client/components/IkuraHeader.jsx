@@ -47,6 +47,9 @@ export default class IkuraHeader extends Component {
         </div>
 
         <div className="row">
+          <div className="col-md-2">
+            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newloan">New Loan</button>
+          </div>
           <div className="col-md-4 col-md-offset-4 input-group">
             <span className="input-group-addon">
               <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
