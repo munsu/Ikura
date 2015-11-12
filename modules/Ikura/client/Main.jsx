@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import ReactMixin from 'react-mixin';
 
-import IkuraHeader from './components/IkuraHeader';
+import Header from './components/Header';
 import LoanList from './components/LoanList';
-import LoanForm from './components/LoanForm';
+import LoanEnrollmentModal from './components/LoanEnrollmentModal';
 
 import Loans from 'Ikura/collections/Loans';
 
 @ReactMixin.decorate(ReactMeteorData)
-export default class IkuraMain extends Component {
+export default class Main extends Component {
 
   state = {
     hideCompleted: false
@@ -46,11 +46,11 @@ export default class IkuraMain extends Component {
 
     return (
         <div className="container">
-          <IkuraHeader
+          <Header
               hideCompleted={this.state.hideCompleted}
               toggleHideCompleted={this.handleToggleHideCompleted} />
 
-          <LoanForm />
+          <LoanEnrollmentModal />
 
           <LoanList
               loans={this.data.loans} />

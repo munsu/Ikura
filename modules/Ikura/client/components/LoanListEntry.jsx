@@ -4,7 +4,7 @@ import ReactMixin from 'react-mixin';
 import Clients from 'Ikura/collections/Clients';
 
 @ReactMixin.decorate(ReactMeteorData)
-export default class LoanEntry extends Component {
+export default class LoanListEntry extends Component {
   static propTypes = {
     loan: PropTypes.object.isRequired
   }

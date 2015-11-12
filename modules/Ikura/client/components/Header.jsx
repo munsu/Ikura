@@ -2,7 +2,7 @@ import { Component, PropTypes } from 'react';
 
 const LoginButtons = BlazeToReact('loginButtons');
 
-export default class IkuraHeader extends Component {
+export default class Header extends Component {
   static propTypes = {
     hideCompleted: PropTypes.bool,
     toggleHideCompleted: PropTypes.func.isRequired

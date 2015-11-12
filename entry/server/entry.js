@@ -1,2 +1,3 @@
-import 'Ikura/ikura-methods';
-import 'Ikura/server/ikura-subscriptions';
+import 'Ikura/methods';
+import 'Ikura/helpers';
+import 'Ikura/server/subscriptions';

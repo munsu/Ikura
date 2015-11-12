@@ -1,5 +1,6 @@
 // Methods for optimistic updates
-import 'Ikura/ikura-methods';
+import 'Ikura/methods';
+import 'Ikura/helpers';
 
 import './routes';
 

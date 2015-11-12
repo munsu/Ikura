@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react';
 
-export default class LoanForm extends Component {
+export default class LoanEnrollmentModal extends Component {
 
   render() {
     return (
