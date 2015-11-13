@@ -1,11 +1,15 @@
 import { Component, PropTypes } from 'react';
 
+import AgentDropdown from './AgentDropdown';
+
 const LoginButtons = BlazeToReact('loginButtons');
 
 export default class Header extends Component {
   static propTypes = {
     hideCompleted: PropTypes.bool,
-    toggleHideCompleted: PropTypes.func.isRequired
+    toggleHideCompleted: PropTypes.func.isRequired,
+    agentFilter: PropTypes.string,
+    filterByAgent: PropTypes.func.isRequired
   }
 
   // handleSubmit(event) {
@@ -57,6 +61,12 @@ export default class Header extends Component {
           </div>
           <div className="col-md-2">
             <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onClick={this.props.toggleHideCompleted}>Hide Completed</button>
+          </div>
+          <div className="col-md-2">
+            <AgentDropdown
+              agents={Meteor.users.find().fetch()}
+              agentFilter={this.props.agentFilter}
+              filterByAgent={this.props.filterByAgent} />
           </div>
         </div>
 

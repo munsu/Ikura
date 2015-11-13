@@ -1,5 +1,5 @@
 import { Component, PropTypes } from 'react';
-import LoanListEntry from './LoanListEntry';
+import LoanListItem from './LoanListItem';
 import LoanDetailModal from './LoanDetailModal';
 
 
@@ -13,7 +13,7 @@ export default class LoanList extends Component {
       <div>
         <div className="list-group">
           {this.props.loans.map(loan =>
-            <LoanListEntry
+            <LoanListItem
               key={loan._id}
               loan={loan} />)}
         </div>

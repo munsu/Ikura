@@ -5,13 +5,15 @@ import Header from './components/Header';
 import LoanList from './components/LoanList';
 import LoanEnrollmentModal from './components/LoanEnrollmentModal';
 
+import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
 
 @ReactMixin.decorate(ReactMeteorData)
 export default class Main extends Component {
 
   state = {
-    hideCompleted: false
+    hideCompleted: false,
+    agentFilter: 'All'
   }
 
   getMeteorData() {
@@ -25,6 +27,12 @@ export default class Main extends Component {
       loanFilter.paid = {$ne: true};
     }
 
+    if (this.state.agentFilter != 'All') {
+      const agent = Meteor.users.find({username: this.state.agentFilter}).fetch()[0];
+      const clients = Clients.find({agentId: agent._id}).fetch();
+      loanFilter.clientId = {$in: clients.map(c => c._id)}
+      console.log(loanFilter)
+    }
     const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
 
     return {
@@ -37,6 +45,10 @@ export default class Main extends Component {
     this.setState({ hideCompleted: e.target.classList.contains("active") });
   }
 
+  handleFilterByAgent = (e) => {
+    this.setState({ agentFilter: e.target.text })
+  }
+
   render() {
     if (!this.data.loans) {
       // loading
@@ -47,7 +59,9 @@ export default class Main extends Component {
         <div className="container">
           <Header
               hideCompleted={this.state.hideCompleted}
-              toggleHideCompleted={this.handleToggleHideCompleted} />
+              toggleHideCompleted={this.handleToggleHideCompleted}
+              agentFilter={this.state.agentFilter}
+              filterByAgent={this.handleFilterByAgent} />
 
           <LoanEnrollmentModal />
 
