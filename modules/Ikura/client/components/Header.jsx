@@ -23,15 +23,9 @@ export default class Header extends Component {
   // }
 
   render() {
-    let form = null;
-
-    // if (Meteor.userId()) {
-    //   form = (
-    //     <form className="new-task" onSubmit={this.handleSubmit.bind(this)}>
-    //       <input type="text" name="text" placeholder="Type to add new tasks" />
-    //     </form>
-    //   );
-    // }
+    let hideButtonClass = "btn btn-primary btn-block"
+    if (this.props.hideCompleted)
+      hideButtonClass += " active";
 
     return (
       <header>
@@ -48,21 +42,25 @@ export default class Header extends Component {
 
         <div className="row">
           <div className="col-md-2">
+            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newclient">New Client</button>
+          </div>
+          <div className="col-md-2">
             <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newloan">New Loan</button>
           </div>
-          <div className="col-md-4 col-md-offset-4 input-group">
-            <span className="input-group-addon">
-              <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
-            </span>
-            <input type="text" className="form-control" />
+          <div className="col-md-4">
+            <div className="input-group">
+              <span className="input-group-addon">
+                <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </span>
+              <input type="text" className="form-control" />
+            </div>
+          </div>
+          <div className="col-md-2">
+            <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onClick={this.props.toggleHideCompleted}>Hide Completed</button>
           </div>
         </div>
 
-        <label className="hide-completed">
-          <input type="checkbox" checked={this.props.hideCompleted} onChange={this.props.toggleHideCompleted} />
-          Hide Completed Loans
-        </label> <br />
-
+        <br />
 
       </header>
     );

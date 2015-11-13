@@ -21,10 +21,6 @@ export default class LoanDetailModal extends Component {
 
     var month = event.target.month.value;
     var amount = event.target.amount.value;
-    console.log(month)
-    console.log(amount)
-    console.log(month > 0)
-    console.log(month == 0)
 
     Meteor.call('addPayment', this.props.loan._id, month, amount);
 

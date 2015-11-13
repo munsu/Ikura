@@ -27,7 +27,6 @@ export default class Main extends Component {
 
     const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
 
-    console.log(loans)
     return {
       loans: loans,
       user: Meteor.user()
@@ -35,7 +34,7 @@ export default class Main extends Component {
   }
 
   handleToggleHideCompleted = (e) => {
-    this.setState({ hideCompleted: e.target.checked });
+    this.setState({ hideCompleted: e.target.classList.contains("active") });
   }
 
   render() {
