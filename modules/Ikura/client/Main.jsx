@@ -32,12 +32,12 @@ export default class Main extends Component {
       const agent = Meteor.users.find({username: this.state.agentFilter}).fetch()[0];
       const clients = Clients.find({agentId: agent._id}).fetch();
       loanFilter.clientId = {$in: clients.map(c => c._id)}
-      console.log(loanFilter)
     }
     const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
 
     return {
       loans: loans,
+      clients: Clients.find().fetch(),
       user: Meteor.user()
     };
   }
@@ -66,7 +66,8 @@ export default class Main extends Component {
 
           <ClientEnrollmentModal />
 
-          <LoanEnrollmentModal />
+          <LoanEnrollmentModal
+              clients={this.data.clients} />
 
           <LoanList
               loans={this.data.loans} />

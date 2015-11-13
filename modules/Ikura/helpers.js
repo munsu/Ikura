@@ -1,4 +1,11 @@
+import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
+
+Clients.helpers({
+  fullName: function () {
+    return (this.firstName + " " + this.lastName);
+  }
+});
 
 Loans.helpers({
   monthlyAmortization: function () {

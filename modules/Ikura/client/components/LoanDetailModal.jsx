@@ -85,7 +85,7 @@ export default class LoanDetailModal extends Component {
                     <tbody>
                       <tr>
                         <th>Cash Price</th>
-                        <td>{this.props.loan.price}</td>
+                        <td>{this.props.loan.cashPrice}</td>
                       </tr>
                       <tr>
                         <th>Amount Financed</th>
