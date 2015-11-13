@@ -14,7 +14,7 @@ export default class ClientEnrollmentModal extends Component {
             </div>
 
             <div className="modal-body">
-              <form className="form-horizontal">
+              <form className="form-horizontal" id="newClientForm">
                 <div className="form-group">
                   <label htmlFor="input-first-name" className="col-sm-4 control-label">First Name</label>
                   <div className="col-sm-8">
@@ -31,9 +31,8 @@ export default class ClientEnrollmentModal extends Component {
                   <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
                   <div className="col-sm-8">
                     <select className="form-control" id="select-agent">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
+                      {Meteor.users.find().fetch().map(user =>
+                        <option key={user._id} value={user._id}>{user.username}</option>)}
                     </select>
                   </div> 
                 </div>
@@ -42,7 +41,7 @@ export default class ClientEnrollmentModal extends Component {
 
             <div className="modal-footer">
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <button type="submit" className="btn btn-primary" form="newClientForm" value="submit">Save changes</button>
             </div>
           </div>
         </div>
