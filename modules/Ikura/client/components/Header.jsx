@@ -27,7 +27,7 @@ export default class Header extends Component {
   // }
 
   render() {
-    let hideButtonClass = "btn btn-primary btn-block"
+    let hideButtonClass = "btn btn-default btn-block"
     if (this.props.hideCompleted)
       hideButtonClass += " active";
 
@@ -46,10 +46,9 @@ export default class Header extends Component {
 
         <div className="row">
           <div className="col-md-2">
-            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newclient">New Client</button>
           </div>
           <div className="col-md-2">
-            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newloan">New Loan</button>
+            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newloan">New</button>
           </div>
           <div className="col-md-4">
             <div className="input-group">
