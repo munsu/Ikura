@@ -6,6 +6,15 @@ export default class LoanEnrollmentModal extends Component {
     clients: PropTypes.array.isRequired
   }
 
+  computeInput(event) {
+    if (['downpayment', 'cashPrice', 'terms'].includes(event.target.name)) {
+      // compute amountfinanced
+      var form = event.target.form;
+      form.amountFinanced.value = parseFloat(form.cashPrice.value) - parseFloat(form.downpayment.value);
+      form.monthlyAmortization.value = ((parseFloat(form.amountFinanced.value) * 0.025 * parseFloat(form.terms.value)) + parseFloat(form.amountFinanced.value)) / parseFloat(form.terms.value);
+    }
+  }
+
   handleSubmit(event) {
     // Prevent default browser form submit
     event.preventDefault();
@@ -37,7 +46,7 @@ export default class LoanEnrollmentModal extends Component {
             </div>
 
             <div className="modal-body">
-              <form className="form-horizontal" id="newLoanForm" onSubmit={this.handleSubmit.bind(this)}>
+              <form className="form-horizontal" id="newLoanForm" onChange={this.computeInput.bind(this)} onSubmit={this.handleSubmit.bind(this)}>
                 <div className="form-group">
                   <label htmlFor="select-client" className="col-sm-4 control-label">Client</label>
                   <div className="col-sm-8">
@@ -53,37 +62,37 @@ export default class LoanEnrollmentModal extends Component {
                 <div className="form-group">
                   <label htmlFor="input-cash-price" className="col-sm-4 control-label">Cash Price</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-cash-price" name="cashPrice" placeholder="Cash Price" />
+                    <input type="number" className="form-control" id="input-cash-price" name="cashPrice" defaultValue="0" />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-downpayment" className="col-sm-4 control-label">Downpayment</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-downpayment" name="downpayment" placeholder="Downpayment" />
+                    <input type="number" className="form-control" id="input-downpayment" name="downpayment" defaultValue="0" />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-amount-financed" className="col-sm-4 control-label">Amount Financed</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-amount-financed" name="amountFinanced" placeholder="Amount Financed" tabIndex="-1" readOnly />
+                    <input type="number" className="form-control" id="input-amount-financed" name="amountFinanced" defaultValue="0" tabIndex="-1" readOnly />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-terms" className="col-sm-4 control-label">Terms</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-terms" name="terms" placeholder="Terms" />
+                    <input type="number" className="form-control" id="input-terms" name="terms" defaultValue="0" />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-monthly-amortization" className="col-sm-4 control-label">Monthly Amortization</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-monthly-amortization" name="monthlyAmortization" placeholder="0" tabIndex="-1" readOnly />
+                    <input type="number" className="form-control" id="input-monthly-amortization" name="monthlyAmortization" defaultValue="0" tabIndex="-1" readOnly />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-on-time-payment" className="col-sm-4 control-label">On Time Payment</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-on-time-payment" name="onTimePayment" placeholder="On Time Payment" />
+                    <input type="number" className="form-control" id="input-on-time-payment" name="onTimePayment" defaultValue="0" />
                   </div> 
                 </div>
                 <div className="form-group">

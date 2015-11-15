@@ -11,7 +11,7 @@ export default class LoanDetailModal extends Component {
 
   getMeteorData() {
     return {
-      client: Clients.find(this.props.loan.clientId).fetch()[0]
+      client: Clients.findOne(this.props.loan.clientId)
     }
   }
 
