@@ -7,7 +7,7 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    Clients.insert({
+    return Clients.insert({
       _id: new Mongo.ObjectID(),
       agentId: agentId,
       firstName: firstName,
@@ -24,10 +24,9 @@ Meteor.methods({
       throw new Meteor.Error('invalid values');
     }
     // TODO check if admin
-    console.log(clientId)
     Loans.insert({
       _id: new Mongo.ObjectID(),
-      clientId: new Mongo.ObjectID(clientId),
+      clientId: typeof clientId === 'object' ? clientId : new Mongo.ObjectID(clientId),
       cashPrice: parseFloat(cashPrice),
       downpayment: parseFloat(downpayment),
       amountFinanced: parseFloat(amountFinanced),

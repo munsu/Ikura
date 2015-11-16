@@ -6,9 +6,9 @@ export default class ClientEnrollmentModal extends Component {
     // Prevent default browser form submit
     event.preventDefault();
 
-    var firstName = event.target.firstName.value;
-    var lastName = event.target.lastName.value;
-    var selectAgent = event.target.selectAgent.value;
+    const firstName = event.target.firstName.value;
+    const lastName = event.target.lastName.value;
+    const selectAgent = event.target.selectAgent.value;
     Meteor.call('addClient', selectAgent, firstName, lastName);
 
     // Clear amount input

@@ -17,7 +17,7 @@ export default class Header extends Component {
   //   event.preventDefault();
 
   //   // Get value from form element
-  //   var text = event.target.text.value;
+  //   let text = event.target.text.value;
 
   //   // Insert a task into the collection
   //   Meteor.call('addLoan', text);

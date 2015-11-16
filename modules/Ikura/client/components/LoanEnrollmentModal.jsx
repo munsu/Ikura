@@ -7,17 +7,22 @@ export default class LoanEnrollmentModal extends Component {
   }
 
   computeInput(event) {
+    let form = event.target.form;
+
     if (['downpayment', 'cashPrice', 'terms'].includes(event.target.name)) {
       // compute the readonly fields (amountFinanced, monthlyAmortization)
-      var form = event.target.form;
       form.amountFinanced.value = parseFloat(form.cashPrice.value) - parseFloat(form.downpayment.value);
       form.monthlyAmortization.value = ((parseFloat(form.amountFinanced.value) * 0.025 * parseFloat(form.terms.value)) + parseFloat(form.amountFinanced.value)) / parseFloat(form.terms.value);
     } else if ('selectClient' === event.target.name) {
       // show/hide the new client form
       if (event.target.selectedIndex === 0) {
         $('.collapse').collapse('show');
+        form.firstName.required = true;
+        form.lastName.required = true;
       } else {
         $('.collapse').collapse('hide');
+        form.firstName.required = false;
+        form.lastName.required = false;
       }
     }
   }
@@ -26,19 +31,29 @@ export default class LoanEnrollmentModal extends Component {
     // Prevent default browser form submit
     event.preventDefault();
 
-    var selectClient = event.target.selectClient.value;
-    var cashPrice = event.target.cashPrice.value;
-    var downpayment = event.target.downpayment.value;
-    var amountFinanced = parseFloat(cashPrice) - parseFloat(downpayment);
-    var terms = event.target.terms.value;
-    var onTimePayment = event.target.onTimePayment.value;
-    var firstPaymentDue = event.target.firstPaymentDue.value;
+    // Form values
+    const cashPrice = event.target.cashPrice.value;
+    const downpayment = event.target.downpayment.value;
+    const amountFinanced = parseFloat(cashPrice) - parseFloat(downpayment);
+    const terms = event.target.terms.value;
+    const onTimePayment = event.target.onTimePayment.value;
+    const firstPaymentDue = event.target.firstPaymentDue.value;
 
-    Meteor.call('addLoan', selectClient, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
+    // new client
+    if (event.target.selectClient.selectedIndex === 0){
+      const firstName = event.target.firstName.value;
+      const lastName = event.target.lastName.value;
+      const selectAgent = event.target.selectAgent.value;
+      Meteor.call('addClient', selectAgent, firstName, lastName, (error, result) =>
+        Meteor.call('addLoan', result, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue));
+    } else {
+      const selectClient = event.target.selectClient.value;
+      Meteor.call('addLoan', selectClient, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
+    }
 
-    // Clear amount input
-    // event.target.firstName.value = '';
-    // event.target.lastName.value = '';
+    // Reset form
+    event.target.reset();
+    $('#newloan').modal('hide');
   }
 
   render() {
@@ -96,13 +111,13 @@ export default class LoanEnrollmentModal extends Component {
                 <div className="form-group">
                   <label htmlFor="input-cash-price" className="col-sm-4 control-label">Cash Price</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-cash-price" name="cashPrice" defaultValue="0" />
+                    <input type="number" className="form-control" id="input-cash-price" name="cashPrice" defaultValue="0" required />
                   </div> 
                 </div>
                 <div className="form-group">
                   <label htmlFor="input-downpayment" className="col-sm-4 control-label">Downpayment</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-downpayment" name="downpayment" defaultValue="0" />
+                    <input type="number" className="form-control" id="input-downpayment" name="downpayment" defaultValue="0" required />
                   </div> 
                 </div>
                 <div className="form-group">
@@ -114,7 +129,7 @@ export default class LoanEnrollmentModal extends Component {
                 <div className="form-group">
                   <label htmlFor="input-terms" className="col-sm-4 control-label">Terms</label>
                   <div className="col-sm-8">
-                    <input type="number" className="form-control" id="input-terms" name="terms" defaultValue="0" />
+                    <input type="number" className="form-control" id="input-terms" name="terms" defaultValue="0" required />
                   </div> 
                 </div>
                 <div className="form-group">

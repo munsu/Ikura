@@ -19,8 +19,8 @@ export default class LoanDetailModal extends Component {
     // Prevent default browser form submit
     event.preventDefault();
 
-    var month = event.target.month.value;
-    var amount = event.target.amount.value;
+    const month = event.target.month.value;
+    const amount = event.target.amount.value;
 
     Meteor.call('addPayment', this.props.loan._id, month, amount);
 
