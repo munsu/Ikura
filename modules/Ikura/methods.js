@@ -73,6 +73,14 @@ Meteor.methods({
       throw new Meteor.Error('not-authorized');
     }
 
-    Loans.update(loanId, { $set: { done: setDone} });
+    Loans.update(loanId, { $set: { isDone: setDone} });
+  },
+  updateLoanNotes: function (loanId, notes) {
+    if (! Meteor.userId()) {
+      // TODO permissions
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Loans.update(loanId, { $set: { notes: notes}});    
   }
 });

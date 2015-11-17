@@ -25,7 +25,7 @@ export default class Main extends Component {
     let loanFilter = {};
 
     if (this.state.hideCompleted) {
-      loanFilter.paid = {$ne: true};
+      loanFilter.isDone = {$ne: true};
     }
 
     if (this.state.agentFilter != 'All') {

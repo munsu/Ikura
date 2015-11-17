@@ -24,12 +24,20 @@ export default class LoanDetailModal extends Component {
 
     Meteor.call('addPayment', this.props.loan._id, month, amount);
 
-    // Clear amount input
-    event.target.amount.value = '';
+    // Reset form
+    event.target.reset();
   }
 
   handleDeletePayment(paymentId) {
     Meteor.call('removePayment', this.props.loan._id, paymentId);
+  }
+
+  handleMarkAsDone(event) {
+    Meteor.call('setDone', this.props.loan._id, event.target.checked);
+  }
+
+  handleTextInput(event) {
+    Meteor.call('updateLoanNotes', this.props.loan._id, event.target.value);
   }
 
   render() {
@@ -46,14 +54,16 @@ export default class LoanDetailModal extends Component {
             </div>
 
             <div className="modal-body row">
+              {/* Payments */}
               <div className="col-md-6">
                 <div className="panel panel-default">
                   <div className="panel-heading">
-                    Add Payment
+                    <span className="h4">Payments</span>
                   </div>
                   <table className="table table-condensed">
                     <thead>
                       <tr>
+                        <th>#</th>
                         <th>Date</th>
                         <th>Amount</th>
                         <th><span className="glyphicon glyphicon-cog pull-right"></span></th>
@@ -61,8 +71,9 @@ export default class LoanDetailModal extends Component {
                     </thead>
                     <tbody>
                       {this.props.loan.payments.sort((a, b) =>
-                        a.date > b.date ? 1 : -1).map(payment =>
+                        a.date > b.date ? 1 : -1).map((payment, index) =>
                           <tr key={payment._id}>
+                            <th>{index + 1}</th>
                             <td>{moment(payment.date, "YYYY-MM").format("MMM YYYY")}</td>
                             <td>{payment.amount}</td>
                             <td><button className="close" onClick={this.handleDeletePayment.bind(this, payment._id)}>&times;</button></td>
@@ -76,10 +87,11 @@ export default class LoanDetailModal extends Component {
                 </div>
               </div>
 
+              {/* Metrics and Additional actions */}
               <div className="col-md-6">
                 <div className="panel panel-default">
                   <div className="panel-heading">
-                    Metrics
+                    <span className="h4">Metrics</span>
                   </div>
                   <table className="table table-condensed">
                     <tbody>
@@ -109,10 +121,24 @@ export default class LoanDetailModal extends Component {
                       </tr>
                       <tr>
                         <th>Total Paid</th>
-                        <td>{this.props.loan.payments.map(p => p.amount).reduce((p, c) => p + c, 0)}</td>
+                        <td><p className={(this.props.loan.isPaid() ? 'bg-success' : 'bg-warning')}>{this.props.loan.totalPaid()}</p></td>
                       </tr>
                     </tbody>
                   </table>
+                </div>
+                <div className="panel panel-default">
+                  <div className="panel-heading">
+                    <span className="h4">Options</span>
+                  </div>
+                  <div className="panel-body">
+                    <div className="checkbox">
+                      <label>
+                        <input type="checkbox" checked={this.props.loan.isDone} onChange={this.handleMarkAsDone.bind(this)} />
+                        Mark loan as done
+                      </label>
+                    </div>
+                    <textarea className="form-control" rows="3" onChange={this.handleTextInput.bind(this)} placeholder="Notes">{this.props.loan.notes}</textarea>
+                  </div>
                 </div>
               </div>
             </div>
