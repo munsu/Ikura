@@ -137,7 +137,7 @@ export default class LoanDetailModal extends Component {
                         Mark loan as done
                       </label>
                     </div>
-                    <textarea className="form-control" rows="3" onChange={this.handleTextInput.bind(this)} placeholder="Notes">{this.props.loan.notes}</textarea>
+                    <textarea className="form-control" rows="3" onChange={this.handleTextInput.bind(this)} placeholder="Notes" value={this.props.loan.notes}></textarea>
                   </div>
                 </div>
               </div>

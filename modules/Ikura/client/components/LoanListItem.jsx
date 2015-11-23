@@ -21,10 +21,12 @@ export default class LoanListItem extends Component {
   render() {
     let modal_id = "#modal-" + this.props.loan._id
     return (
-      <button type="button" className="list-group-item" data-toggle="modal" data-target={modal_id}>
-        <h4 className="list-group-item-heading">{this.data.client.firstName} - {this.props.loan.amountFinanced}</h4>
-        <span className="list-group-item-text">{this.data.agent.username}</span>
-      </button>
+      <li className="list-group-item">
+        <a href="#" data-toggle="modal" data-target={modal_id}>
+          <h4 className="list-group-item-heading">{this.data.client.firstName} - {this.props.loan.amountFinanced}</h4>
+        </a>
+          <span className="list-group-item-text">{this.data.agent.username}</span>
+      </li>
     );
   }
 }

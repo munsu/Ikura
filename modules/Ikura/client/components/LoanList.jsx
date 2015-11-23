@@ -11,12 +11,12 @@ export default class LoanList extends Component {
   render() {
     return (
       <div>
-        <div className="list-group">
+        <ul className="list-group">
           {this.props.loans.map(loan =>
             <LoanListItem
               key={loan._id}
               loan={loan} />)}
-        </div>
+        </ul>
 
         <div>
           {this.props.loans.map(loan =>
