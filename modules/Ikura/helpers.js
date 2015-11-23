@@ -2,8 +2,12 @@ import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
 
 Clients.helpers({
-  fullName: function () {
-    return (this.firstName + " " + this.lastName);
+  name: function () {
+    if (this.firstName && this.lastName) {
+      return (this.firstName + " " + this.lastName);
+    } else {
+      return (this.identifierDump);
+    }
   }
 });
 

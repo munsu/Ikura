@@ -59,7 +59,7 @@ export default class Header extends Component {
             </div>
           </div>
           <div className="col-md-2">
-            <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onClick={this.props.toggleHideCompleted}>Hide Completed</button>
+            <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onFocus={this.props.toggleHideCompleted}>Hide Completed</button>
           </div>
           <div className="col-md-2">
             <AgentDropdown

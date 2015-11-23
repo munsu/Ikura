@@ -6,6 +6,7 @@ export default Clients;
 Client
 - firstName
 - lastName
+- identifierDump
 - agentId
 - loans
 */

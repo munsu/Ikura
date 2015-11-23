@@ -76,7 +76,7 @@ export default class LoanEnrollmentModal extends Component {
                     <select className="form-control" id="select-client" name="selectClient">
                       <option value="new">New Client</option>
                       {this.props.clients.map(client =>
-                        <option key={client._id} value={client._id}>{client.fullName()}</option>)}
+                        <option key={client._id} value={client._id}>{client.name()}</option>)}
                     </select>
                   </div> 
                 </div>
