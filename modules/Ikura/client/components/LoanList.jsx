@@ -10,7 +10,7 @@ export default class LoanList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="col-md-8 col-md-offset-2">
         <ul className="list-group">
           {this.props.loans.map(loan =>
             <LoanListItem
