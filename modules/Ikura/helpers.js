@@ -24,5 +24,11 @@ Loans.helpers({
   },
   isPaid: function () {
     return this.totalPaid() >= this.totalLoan();
+  },
+  nextPaymentDue: function () {
+    if (this.payments.length == 0) {
+      return moment(this.firstPaymentDue, "YYYY-MM").format("YYYY-MM");
+    }
+    return moment(this.payments[this.payments.length - 1].date, "YYYY-MM").add(1, 'M').format("YYYY-MM");
   }
 });

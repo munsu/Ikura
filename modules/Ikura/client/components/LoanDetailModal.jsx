@@ -22,10 +22,10 @@ export default class LoanDetailModal extends Component {
     const month = event.target.month.value;
     const amount = event.target.amount.value;
 
-    Meteor.call('addPayment', this.props.loan._id, month, amount);
-
-    // Reset form
-    event.target.reset();
+    Meteor.call('addPayment', this.props.loan._id, month, amount, (error, result) => {
+      // Reset form
+      event.target.reset();
+      event.target.month.value = this.props.loan.nextPaymentDue();});
   }
 
   handleDeletePayment(paymentId) {
@@ -60,7 +60,7 @@ export default class LoanDetailModal extends Component {
                   <div className="panel-heading">
                     <span className="h4">Payments</span>
                   </div>
-                  <table className="table table-condensed">
+                  <table className="table">
                     <thead>
                       <tr>
                         <th>#</th>
@@ -81,7 +81,7 @@ export default class LoanDetailModal extends Component {
                     </tbody>
                   </table>
                   <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-                    <input type="month" name="month" defaultValue={moment().format("YYYY-MM")} required />
+                    <input type="month" name="month" defaultValue={this.props.loan.nextPaymentDue()} required />
                     <input type="number" name="amount" required />
                   </form>
                 </div>
