@@ -1,10 +1,10 @@
-import IkuraApp from './IkuraApp';
-import IkuraMain from './IkuraMain';
+import App from './App';
+import Main from './Main';
 
 FlowRouter.route('/', {
   action() {
-    ReactLayout.render(IkuraApp, {
-      children: <IkuraMain />
+    ReactLayout.render(App, {
+      children: <Main />
     });
   }
 });

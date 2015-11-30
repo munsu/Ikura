@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react';
 
-export default class IkuraApp extends Component {
+export default class App extends Component {
   static propTypes = {
     children: PropTypes.any.isRequired
   }

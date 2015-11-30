@@ -12,3 +12,7 @@ Meteor.publish('clients', function () {
 Meteor.publish('loans', function () {
   return Loans.find();
 });
+
+Meteor.publish('userData', function () {
+    return Meteor.users.find();
+})
