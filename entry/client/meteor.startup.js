@@ -2,3 +2,7 @@
 // You can initialize anything you need before your app start here
 
 FlowRouter.wait();
+
+Accounts.config({
+  forbidClientAccountCreation: true
+});
