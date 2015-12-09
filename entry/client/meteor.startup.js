@@ -2,3 +2,8 @@
 // You can initialize anything you need before your app start here
 
 FlowRouter.wait();
+
+// just to disable account creation from accounts-ui
+Accounts.config({
+  forbidClientAccountCreation: true
+});

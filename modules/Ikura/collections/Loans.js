@@ -4,6 +4,7 @@ export default Loans;
 
 /*
 Loan
+- _id
 - clientId
 - cashPrice
 - amountFinanced
@@ -14,6 +15,8 @@ Loan
 - payments
   - date
   - amount
+  - recorder
+  - _id
 - isDone
 ~ monthlyAmortization
 */
