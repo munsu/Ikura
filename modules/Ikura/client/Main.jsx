@@ -1,9 +1,10 @@
 import { Component } from 'react';
 import ReactMixin from 'react-mixin';
 
+import AdminModal from './components/AdminModal';
+import ClientEnrollmentModal from './components/ClientEnrollmentModal';
 import Header from './components/Header';
 import LoanList from './components/LoanList';
-import ClientEnrollmentModal from './components/ClientEnrollmentModal';
 import LoanEnrollmentModal from './components/LoanEnrollmentModal';
 
 import Clients from 'Ikura/collections/Clients';
@@ -64,6 +65,8 @@ export default class Main extends Component {
               toggleHideCompleted={this.handleToggleHideCompleted}
               agentFilter={this.state.agentFilter}
               filterByAgent={this.handleFilterByAgent} />
+
+          <AdminModal />
 
           <ClientEnrollmentModal />
 

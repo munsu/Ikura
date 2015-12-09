@@ -3,6 +3,7 @@
 
 FlowRouter.wait();
 
+// just to disable account creation from accounts-ui
 Accounts.config({
   forbidClientAccountCreation: true
 });
