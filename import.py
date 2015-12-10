@@ -41,7 +41,7 @@ with codecs.open("loans.json", "w", encoding="utf-8") as loans, \
                 if v != "":
                     lrow['payments'].append({
                         "date": k,
-                        "amount": v,
+                        "amount": int(v),
                         "_id": {"$oid": str(bson.objectid.ObjectId())}
                     })
             else:
