@@ -5,7 +5,9 @@ import LoanDetailModal from './LoanDetailModal';
 
 export default class LoanList extends Component {
   static propTypes = {
-    loans: PropTypes.array.isRequired
+    loans: PropTypes.array.isRequired,
+    setSelectedLoan: PropTypes.func.isRequired,
+    selectedLoan: PropTypes.any
   }
 
   render() {
@@ -15,15 +17,12 @@ export default class LoanList extends Component {
           {this.props.loans.map(loan =>
             <LoanListItem
               key={loan._id}
-              loan={loan} />)}
+              loan={loan}
+              setSelectedLoan={this.props.setSelectedLoan} />)}
         </ul>
 
-        <div>
-          {this.props.loans.map(loan =>
-            <LoanDetailModal
-              key={loan._id}
-              loan={loan} />)}
-        </div>
+        <LoanDetailModal loan={this.props.selectedLoan} />
+
       </div>
     );
   }

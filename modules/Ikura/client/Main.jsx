@@ -15,7 +15,8 @@ export default class Main extends Component {
 
   state = {
     hideCompleted: false,
-    agentFilter: 'All'
+    agentFilter: 'All',
+    selectedLoan: null,
   }
 
   getMeteorData() {
@@ -49,7 +50,11 @@ export default class Main extends Component {
   }
 
   handleFilterByAgent = (e) => {
-    this.setState({ agentFilter: e.target.text })
+    this.setState({ agentFilter: e.target.text });
+  }
+
+  handleSetSelectedLoan = (e) => {
+    this.setState({ selectedLoan: e });
   }
 
   render() {
@@ -74,7 +79,9 @@ export default class Main extends Component {
               clients={this.data.clients} />
 
           <LoanList
-              loans={this.data.loans} />
+              loans={this.data.loans}
+              setSelectedLoan={this.handleSetSelectedLoan}
+              selectedLoan={this.state.selectedLoan} />
         </div>
     );
   }

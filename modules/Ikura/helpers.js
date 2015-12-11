@@ -30,5 +30,20 @@ Loans.helpers({
       return moment(this.firstPaymentDue, "YYYY-MM").format("YYYY-MM");
     }
     return moment(this.payments[this.payments.length - 1].date, "YYYY-MM").add(1, 'M').format("YYYY-MM");
+  },
+  clientName: function () {
+    try {
+      return Clients.findOne({_id: this.clientId}).name();
+    } catch (e) {
+      return "Loading";
+    }
+  },
+  agentName: function () {
+    try {
+      const client = Clients.findOne({_id: this.clientId});
+      return Meteor.users.findOne({_id: client.agentId}).username;
+    } catch (e) {
+      return "Loading";
+    }
   }
 });
