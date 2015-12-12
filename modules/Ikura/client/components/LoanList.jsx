@@ -1,18 +1,18 @@
 import { Component, PropTypes } from 'react';
 import LoanListItem from './LoanListItem';
-import LoanDetailModal from './LoanDetailModal';
+import LoanDetailModal from './LoanDetailModal2';
 
 
 export default class LoanList extends Component {
   static propTypes = {
     loans: PropTypes.array.isRequired,
     setSelectedLoan: PropTypes.func.isRequired,
-    selectedLoan: PropTypes.any
+    selectedLoan: PropTypes.any.isRequired
   }
 
   render() {
     return (
-      <div className="col-md-8 col-md-offset-2">
+      <div className="page-container col-md-8 col-md-offset-2">
         <ul className="list-group">
           {this.props.loans.map(loan =>
             <LoanListItem
@@ -21,7 +21,12 @@ export default class LoanList extends Component {
               setSelectedLoan={this.props.setSelectedLoan} />)}
         </ul>
 
-        <LoanDetailModal loan={this.props.selectedLoan} />
+        <div>
+          {this.props.loans.map(loan =>
+            <LoanDetailModal
+              key={loan._id}
+              loan={loan} />)}
+        </div>
 
       </div>
     );

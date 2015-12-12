@@ -1,21 +1,8 @@
 import { Component, PropTypes } from 'react';
-import ReactMixin from 'react-mixin';
 
-import Clients from 'Ikura/collections/Clients';
-
-@ReactMixin.decorate(ReactMeteorData)
 export default class LoanDetailModal extends Component {
   static propTypes = {
     loan: PropTypes.any
-  }
-
-  getMeteorData() {
-    if (this.props.loan){
-      return {
-        client: Clients.findOne(this.props.loan.clientId)
-      }
-    }
-    return {};
   }
 
   handleSubmit(event) {
@@ -27,20 +14,29 @@ export default class LoanDetailModal extends Component {
 
     Meteor.call('addPayment', this.props.loan._id, month, amount, (error, result) => {
       // Reset form
+      console.log("WHUT")
       event.target.reset();
       event.target.month.value = this.props.loan.nextPaymentDue();});
+      this.forceUpdate();
   }
 
   handleDeletePayment(paymentId) {
-    Meteor.call('removePayment', this.props.loan._id, paymentId);
+    Meteor.call('removePayment', this.props.loan._id, paymentId, (error, result) => {
+      this.forceUpdate();
+    });
   }
 
   handleMarkAsDone(event) {
-    Meteor.call('setDone', this.props.loan._id, event.target.checked);
+    Meteor.call('setDone', this.props.loan._id, event.target.checked, (error, result) => {
+      this.forceUpdate();
+    });
+
   }
 
   handleTextInput(event) {
-    Meteor.call('updateLoanNotes', this.props.loan._id, event.target.value);
+    Meteor.call('updateLoanNotes', this.props.loan._id, event.target.value, (error, result) => {
+      this.forceUpdate();
+    });
   }
 
   render() {
@@ -66,7 +62,7 @@ export default class LoanDetailModal extends Component {
         <div className="modal-content">
           <div className="modal-header">
             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 className="modal-title">{this.data.client.name()}</h4>
+            <h4 className="modal-title">{this.props.loan.clientName()}</h4>
           </div>
 
           <div className="modal-body row">
