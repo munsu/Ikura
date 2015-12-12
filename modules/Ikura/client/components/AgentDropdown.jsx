@@ -11,9 +11,9 @@ export default class AgentDropdown extends Component {
 
   render () {
     return (
-      <div className="dropdown">
-        <button type="button" className="btn btn-default btn-block dropdown-toggle" id="sortAgentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {this.props.agentFilter} <span className="glyphicon glyphicon-filter" aria-hidden="true"></span>
+      <div className="dropdown navbar-btn">
+        <button type="button" className="btn btn-link dropdown-toggle" id="sortAgentDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span className="glyphicon glyphicon-filter" aria-hidden="true"></span> {this.props.agentFilter}
         </button>
         <ul className="dropdown-menu" aria-labelledby="sortAgentDropdown">
           <li><a href="#" onClick={this.props.filterByAgent}>All</a></li>

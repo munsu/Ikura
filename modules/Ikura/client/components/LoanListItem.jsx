@@ -13,6 +13,7 @@ export default class LoanListItem extends Component {
   }
 
   render() {
+    let modal_id = "#modal-" + this.props.loan._id
     let label = null
     if (this.props.loan.isDone) {
       label = (
@@ -24,7 +25,7 @@ export default class LoanListItem extends Component {
       <li className="list-group-item">
         <div className="list-group-item-heading">
           <h4>
-            <a href="#" onClick={this.handleClickListItem.bind(this)} data-toggle="modal" data-target="#loandetailmodal">{this.props.loan.clientName()} - &#x20b1;{this.props.loan.amountFinanced}</a>
+            <a href="#" onClick={this.handleClickListItem.bind(this)} data-toggle="modal" data-target={modal_id}>{this.props.loan.clientName()} - &#x20b1;{this.props.loan.amountFinanced}</a>
             &nbsp;{label}
           </h4>
         </div>

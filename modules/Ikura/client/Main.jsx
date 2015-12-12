@@ -45,7 +45,7 @@ export default class Main extends Component {
   }
 
   handleToggleHideCompleted = (e) => {
-    this.setState({ hideCompleted: e.target.classList.contains("active") });
+    this.setState({ hideCompleted: !this.state.hideCompleted });
     e.target.blur();
   }
 

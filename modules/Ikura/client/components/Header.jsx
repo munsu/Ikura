@@ -27,51 +27,33 @@ export default class Header extends Component {
   // }
 
   render() {
-    let hideButtonClass = "btn btn-default btn-block"
+    let hideButtonClass = "btn btn-link navbar-btn navbar-right"
     if (this.props.hideCompleted)
       hideButtonClass += " active";
 
     return (
       <header>
-        <div className="row">
-          <div className="col-md-2 col-md-offset-5">
-            <h1 className="text-center">
-              <i id="icon" className="fa fa-motorcycle" style={{textShadow: 'None', fontSize: '38px', color: 'rgb(255, 255, 255)', height: '42px', width: '42px', lineHeight: '42px', borderRadius: '20%', textAlign: 'center', backgroundColor: 'rgb(51, 122, 183)'}}></i>
-              &nbsp;Ikura
-            </h1>
-          </div>
-          <div className="col-md-1 col-md-offset-4">
-            <LoginButtons align="right" />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-2">
-            <button type="button" className="btn btn-default btn-block" data-toggle="modal" data-target="#adminmodal">Admin</button>
-          </div>
-          <div className="col-md-2">
-            <button type="button" className="btn btn-primary btn-block" data-toggle="modal" data-target="#newloan">New</button>
-          </div>
-          <div className="col-md-4">
-            <div className="input-group">
-              <span className="input-group-addon">
-                <span className="glyphicon glyphicon-search" aria-hidden="true"></span>
+        <nav className="navbar navbar-default navbar-fixed-top">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <span className="navbar-icon">
+                <i id="icon" className="fa fa-motorcycle" style={{textShadow: 'None', fontSize: '27px', color: 'rgb(248, 248, 248)', height: '30px', width: '30px', lineHeight: '30px', borderRadius: '20%', textAlign: 'center', backgroundColor: 'rgb(51, 122, 183)'}}></i>
               </span>
-              <input type="text" className="form-control" />
             </div>
-          </div>
-          <div className="col-md-2">
-            <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onFocus={this.props.toggleHideCompleted}>Hide Completed</button>
-          </div>
-          <div className="col-md-2">
+            <button type="button" className="btn btn-primary navbar-btn" data-toggle="modal" data-target="#newloan">New</button>
             <AgentDropdown
               agents={Meteor.users.find().fetch()}
               agentFilter={this.props.agentFilter}
               filterByAgent={this.props.filterByAgent} />
+            <div className="navbar-text navbar-right">
+              <LoginButtons align="right" />
+            </div>
+            <button type="button" className="btn btn-link navbar-btn navbar-right" data-toggle="modal" data-target="#adminmodal">
+              <span className="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </button>
+            <button type="button" className={hideButtonClass} data-toggle="button" autoComplete="off" aria-pressed={this.props.hideCompleted} onFocus={this.props.toggleHideCompleted}>Hide Completed</button>
           </div>
-        </div>
-
-        <br />
+        </nav>
 
       </header>
     );
