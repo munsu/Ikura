@@ -1,21 +1,7 @@
-import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
 
 Meteor.methods({
-  addClient: function (agentId, firstName, lastName) {
-    if (! Meteor.userId()) {
-      throw new Meteor.Error('not-authorized');
-    }
-
-    return Clients.insert({
-      _id: new Mongo.ObjectID(),
-      agentId: agentId,
-      firstName: firstName,
-      lastName: lastName,
-      createdAt: new Date()
-    });
-  },
-  addLoan: function (clientId, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue) {
+  addLoan: function (name, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue) {
     // Make sure the user is logged in before inserting a loan
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
@@ -26,7 +12,7 @@ Meteor.methods({
     // TODO check if admin
     Loans.insert({
       _id: new Mongo.ObjectID(),
-      clientId: typeof clientId === 'object' ? clientId : new Mongo.ObjectID(clientId),
+      name: name,
       cashPrice: parseFloat(cashPrice),
       downpayment: parseFloat(downpayment),
       amountFinanced: parseFloat(amountFinanced),

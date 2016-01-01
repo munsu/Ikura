@@ -1,7 +1,5 @@
 import { Component, PropTypes } from 'react';
 
-import Clients from 'Ikura/collections/Clients';
-
 export default class LoanListItem extends Component {
   static propTypes = {
     loan: PropTypes.object.isRequired,
@@ -25,7 +23,7 @@ export default class LoanListItem extends Component {
       <li className="list-group-item">
         <div className="list-group-item-heading">
           <h4>
-            <a href="#" onClick={this.handleClickListItem.bind(this)} data-toggle="modal" data-target={modal_id}>{this.props.loan.clientName()} - &#x20b1;{this.props.loan.amountFinanced}</a>
+            <a href="#" onClick={this.handleClickListItem.bind(this)} data-toggle="modal" data-target={modal_id}>{this.props.loan.name} - &#x20b1;{this.props.loan.amountFinanced}</a>
             &nbsp;{label}
           </h4>
         </div>

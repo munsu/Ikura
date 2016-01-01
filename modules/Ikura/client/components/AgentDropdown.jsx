@@ -16,8 +16,6 @@ export default class AgentDropdown extends Component {
           <span className="glyphicon glyphicon-filter" aria-hidden="true"></span> {this.props.agentFilter}
         </button>
         <ul className="dropdown-menu" aria-labelledby="sortAgentDropdown">
-          <li><a href="#" onClick={this.props.filterByAgent}>All</a></li>
-          <li role="separator" className="divider"></li>
           {this.props.agents.map(agent =>
             <AgentDropdownItem
               key={agent._id}

@@ -19,11 +19,11 @@ date_pattern = re.compile("^[0-9]{4}-[0-9]{2}$")
 
 with codecs.open("loans.json", "w", encoding="utf-8") as loans:
     for row in reader:
-        lrow = {'payments': [], 'client': {}}
+        lrow = {'payments': []}
         for k, v in row.items():
-            if k == "identifierDump":
+            if k == "name":
                 # strip extra white spaces
-                lrow['client'][k] = re.sub("\s+", " ", v)
+                lrow[k] = re.sub("\s+", " ", v)
 
             # number
             elif k in ["terms", "amountFinanced", "downpayment",
@@ -39,7 +39,7 @@ with codecs.open("loans.json", "w", encoding="utf-8") as loans:
                         "_id": {"$oid": str(bson.objectid.ObjectId())}
                     })
             elif k in ["interestRate", "agentId"]:
-                # store interest rate as a string 
+                # store interest rate as a string
                 lrow[k] = v
             else:
                 raise Exception("Header unaccounted for: " + k)

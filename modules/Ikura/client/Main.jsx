@@ -2,12 +2,10 @@ import { Component } from 'react';
 import ReactMixin from 'react-mixin';
 
 import AdminModal from './components/AdminModal';
-import ClientEnrollmentModal from './components/ClientEnrollmentModal';
 import Header from './components/Header';
 import LoanList from './components/LoanList';
 import LoanEnrollmentModal from './components/LoanEnrollmentModal';
 
-import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
 
 @ReactMixin.decorate(ReactMeteorData)
@@ -15,31 +13,30 @@ export default class Main extends Component {
 
   state = {
     hideCompleted: false,
-    agentFilter: 'All',
+    agentFilter: Meteor.user() ? Meteor.user().username : 'None',
     selectedLoan: null,
   }
 
   getMeteorData() {
     Meteor.subscribe('loans');
-    Meteor.subscribe('clients');
     Meteor.subscribe('userData');
 
     let loanFilter = {};
+    let loans = [];
 
     if (this.state.hideCompleted) {
       loanFilter.isDone = {$ne: true};
     }
 
-    if (this.state.agentFilter != 'All') {
+    if (this.state.agentFilter != 'None') {
       const agent = Meteor.users.find({username: this.state.agentFilter}).fetch()[0];
-      const clients = Clients.find({agentId: agent._id}).fetch();
-      loanFilter.clientId = {$in: clients.map(c => c._id)}
+      loanFilter.agentId = agent._id;
+      loans = Loans.find(loanFilter, {sort: {name: 1}}).fetch();
     }
-    const loans = Loans.find(loanFilter, {sort: {createdAt: -1}}).fetch();
 
     return {
+      agents: Meteor.users.find().fetch(),
       loans: loans,
-      clients: Clients.find().fetch(),
       user: Meteor.user()
     };
   }
@@ -73,10 +70,8 @@ export default class Main extends Component {
 
           <AdminModal />
 
-          <ClientEnrollmentModal />
-
           <LoanEnrollmentModal
-              clients={this.data.clients} />
+              agents={this.data.agents} />
 
           <LoanList
               loans={this.data.loans}

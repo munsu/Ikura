@@ -3,7 +3,7 @@ import { Component, PropTypes } from 'react';
 
 export default class LoanEnrollmentModal extends Component {
   static propTypes = {
-    clients: PropTypes.array.isRequired
+    agents: PropTypes.array.isRequired
   }
 
   computeInput(event) {
@@ -69,45 +69,22 @@ export default class LoanEnrollmentModal extends Component {
 
             <div className="modal-body">
               <form className="form-horizontal" id="newLoanForm" onChange={this.computeInput.bind(this)} onSubmit={this.handleSubmit.bind(this)}>
-                {/* Client */}
+                {/* Loan */}
                 <div className="form-group">
-                  <label htmlFor="select-client" className="col-sm-4 control-label">Client</label>
+                      <label htmlFor="input-loan-name" className="col-sm-4 control-label">Name</label>
+                      <div className="col-sm-8">
+                        <input type="text" className="form-control" id="input-loan-name" name="loanName" placeholder="Name" required />
+                      </div> 
+                    </div>
+                <div className="form-group">
+                  <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
                   <div className="col-sm-8">
-                    <select className="form-control" id="select-client" name="selectClient">
-                      <option value="new">New Client</option>
-                      {this.props.clients.map(client =>
-                        <option key={client._id} value={client._id}>{client.name()}</option>)}
+                    <select className="form-control" id="select-agent" name="selectAgent">
+                      {this.props.agents.map(agent =>
+                        <option key={agent._id} value={agent._id}>{agent.username}</option>)}
                     </select>
                   </div> 
                 </div>
-                <div className="collapse in" id="clientCollapse">
-                  <div className="well">
-                    <div className="form-group">
-                      <label htmlFor="input-first-name" className="col-sm-4 control-label">First Name</label>
-                      <div className="col-sm-8">
-                        <input type="text" className="form-control" id="input-first-name" name="firstName" placeholder="First Name" required />
-                      </div> 
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="input-last-name" className="col-sm-4 control-label">Last Name</label>
-                      <div className="col-sm-8">
-                        <input type="text" className="form-control" id="input-last-name" name="lastName" placeholder="Last Name" required />
-                      </div> 
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
-                      <div className="col-sm-8">
-                        <select className="form-control" id="select-agent" name="selectAgent">
-                          {Meteor.users.find().fetch().map(user =>
-                            <option key={user._id} value={user._id}>{user.username}</option>)}
-                        </select>
-                      </div> 
-                    </div>
-                  </div>
-                </div>
-
-                <hr />
-                {/* Loan */}
                 <div className="form-group">
                   <label htmlFor="input-cash-price" className="col-sm-4 control-label">Cash Price</label>
                   <div className="col-sm-8">

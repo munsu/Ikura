@@ -21,14 +21,27 @@ export default class LoanList extends Component {
               setSelectedLoan={this.props.setSelectedLoan} />)}
         </ul>
 
+          {this._loanList()}
+
+      </div>
+    );
+  }
+
+  _loanList() {
+    if (this.props.loans.length > 0) {
+      return (
         <div>
           {this.props.loans.map(loan =>
             <LoanDetailModal
               key={loan._id}
               loan={loan} />)}
+          }
         </div>
-
-      </div>
-    );
+      )
+    } else {
+      return (
+        <p>Nothing to display</p>
+      )
+    }
   }
 }
