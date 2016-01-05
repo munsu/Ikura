@@ -32,24 +32,15 @@ export default class LoanEnrollmentModal extends Component {
     event.preventDefault();
 
     // Form values
+    const loanName = event.target.loanName.value;
+    const selectAgent = event.target.selectAgent.value;
     const cashPrice = event.target.cashPrice.value;
     const downpayment = event.target.downpayment.value;
     const amountFinanced = parseFloat(cashPrice) - parseFloat(downpayment);
     const terms = event.target.terms.value;
     const onTimePayment = event.target.onTimePayment.value;
     const firstPaymentDue = event.target.firstPaymentDue.value;
-
-    // new client
-    if (event.target.selectClient.selectedIndex === 0){
-      const firstName = event.target.firstName.value;
-      const lastName = event.target.lastName.value;
-      const selectAgent = event.target.selectAgent.value;
-      Meteor.call('addClient', selectAgent, firstName, lastName, (error, result) =>
-        Meteor.call('addLoan', result, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue));
-    } else {
-      const selectClient = event.target.selectClient.value;
-      Meteor.call('addLoan', selectClient, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
-    }
+    Meteor.call('addLoan', loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
 
     // Reset form
     event.target.reset();

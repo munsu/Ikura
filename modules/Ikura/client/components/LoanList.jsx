@@ -35,7 +35,6 @@ export default class LoanList extends Component {
             <LoanDetailModal
               key={loan._id}
               loan={loan} />)}
-          }
         </div>
       )
     } else {

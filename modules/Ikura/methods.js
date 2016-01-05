@@ -1,7 +1,7 @@
 import Loans from 'Ikura/collections/Loans';
 
 Meteor.methods({
-  addLoan: function (name, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue) {
+  addLoan: function (name, agentId, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue) {
     // Make sure the user is logged in before inserting a loan
     if (! Meteor.userId()) {
       throw new Meteor.Error('not-authorized');
@@ -13,6 +13,7 @@ Meteor.methods({
     Loans.insert({
       _id: new Mongo.ObjectID(),
       name: name,
+      agentId: agentId,
       cashPrice: parseFloat(cashPrice),
       downpayment: parseFloat(downpayment),
       amountFinanced: parseFloat(amountFinanced),
