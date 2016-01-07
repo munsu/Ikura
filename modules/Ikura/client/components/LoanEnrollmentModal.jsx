@@ -40,7 +40,13 @@ export default class LoanEnrollmentModal extends Component {
     const terms = event.target.terms.value;
     const onTimePayment = event.target.onTimePayment.value;
     const firstPaymentDue = event.target.firstPaymentDue.value;
-    Meteor.call('addLoan', loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
+    Meteor.call('addLoan', loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue, function(error, result) {
+      if (error){
+        toastr.warning('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Failed to create new loan.');
+      } else {
+        toastr.success('<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Created new loan, ' + loanName + '.');
+      }
+    });
 
     // Reset form
     event.target.reset();

@@ -7,3 +7,10 @@ FlowRouter.wait();
 Accounts.config({
   forbidClientAccountCreation: true
 });
+
+// toastr options
+toastr.options = {
+  "positionClass": "toast-bottom-right",
+  "timeOut": "5000",
+  "extendedTimeOut": "1000",
+};

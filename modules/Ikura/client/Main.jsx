@@ -13,8 +13,7 @@ export default class Main extends Component {
 
   state = {
     hideCompleted: false,
-    agentFilter: Meteor.user() ? Meteor.user().username : 'None',
-    selectedLoan: null,
+    agentFilter: Meteor.user() ? Meteor.user().username : 'None'
   }
 
   getMeteorData() {
@@ -50,10 +49,6 @@ export default class Main extends Component {
     this.setState({ agentFilter: e.target.text });
   }
 
-  handleSetSelectedLoan = (e) => {
-    this.setState({ selectedLoan: e });
-  }
-
   render() {
     if (!this.data.loans) {
       // loading
@@ -73,10 +68,10 @@ export default class Main extends Component {
           <LoanEnrollmentModal
               agents={this.data.agents} />
 
-          <LoanList
-              loans={this.data.loans}
-              setSelectedLoan={this.handleSetSelectedLoan}
-              selectedLoan={this.state.selectedLoan} />
+          <div className="page-container col-md-8 col-md-offset-2">
+            <LoanList
+                loans={this.data.loans} />
+          </div>
         </div>
     );
   }
