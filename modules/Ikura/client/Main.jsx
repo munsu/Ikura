@@ -16,6 +16,19 @@ export default class Main extends Component {
     agentFilter: Meteor.user() ? Meteor.user().username : 'None'
   }
 
+  componentDidMount() {
+    Accounts.onLogin(e => this.setState({
+      agentFilter: Meteor.user() ? Meteor.user().username : 'None'
+    }));
+
+    let _logout = Meteor.logout;
+    Meteor.logout = e => {
+      this.setState({agentFilter: 'None'});
+      _logout.apply(Meteor, null);
+    }
+
+  }
+
   getMeteorData() {
     Meteor.subscribe('loans');
     Meteor.subscribe('userData');
