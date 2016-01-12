@@ -21,7 +21,7 @@ export default class AgentDropdown extends Component {
   }
   
   _agentDropdownItems() {
-    if (!this.props.agents) {
+    if (this.props.agents.length > 0) {
       return (
         <ul className="dropdown-menu" aria-labelledby="sortAgentDropdown">
           {this.props.agents.map(agent =>
