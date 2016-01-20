@@ -26,5 +26,11 @@ Loans.helpers({
     } catch (e) {
       return "Loading";
     }
+  },
+  displayName: function () {
+    if (this.index) {
+      return (this.index + ' ' + this.name);
+    }
+    return this.name;
   }
 });

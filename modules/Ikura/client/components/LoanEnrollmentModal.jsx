@@ -13,17 +13,6 @@ export default class LoanEnrollmentModal extends Component {
       // compute the readonly fields (amountFinanced, monthlyAmortization)
       form.amountFinanced.value = parseFloat(form.cashPrice.value) - parseFloat(form.downpayment.value);
       form.monthlyAmortization.value = ((parseFloat(form.amountFinanced.value) * 0.025 * parseFloat(form.terms.value)) + parseFloat(form.amountFinanced.value)) / parseFloat(form.terms.value);
-    } else if ('selectClient' === event.target.name) {
-      // show/hide the new client form
-      if (event.target.selectedIndex === 0) {
-        $('.collapse').collapse('show');
-        form.firstName.required = true;
-        form.lastName.required = true;
-      } else {
-        $('.collapse').collapse('hide');
-        form.firstName.required = false;
-        form.lastName.required = false;
-      }
     }
   }
 
@@ -32,6 +21,7 @@ export default class LoanEnrollmentModal extends Component {
     event.preventDefault();
 
     // Form values
+    const loanIndex = event.target.loanIndex.value;
     const loanName = event.target.loanName.value;
     const selectAgent = event.target.selectAgent.value;
     const cashPrice = event.target.cashPrice.value;
@@ -40,11 +30,11 @@ export default class LoanEnrollmentModal extends Component {
     const terms = event.target.terms.value;
     const onTimePayment = event.target.onTimePayment.value;
     const firstPaymentDue = event.target.firstPaymentDue.value;
-    Meteor.call('addLoan', loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue, function(error, result) {
+    Meteor.call('addLoan', loanIndex, loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue, function(error, result) {
       if (error){
         toastr.warning('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Failed to create new loan.');
       } else {
-        toastr.success('<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Created new loan, ' + loanName + '.');
+        toastr.success('<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Created new loan, ' + loanIndex + ' ' + loanName + '.');
       }
     });
 
@@ -68,11 +58,17 @@ export default class LoanEnrollmentModal extends Component {
               <form className="form-horizontal" id="newLoanForm" onChange={this.computeInput.bind(this)} onSubmit={this.handleSubmit.bind(this)}>
                 {/* Loan */}
                 <div className="form-group">
-                      <label htmlFor="input-loan-name" className="col-sm-4 control-label">Name</label>
-                      <div className="col-sm-8">
-                        <input type="text" className="form-control" id="input-loan-name" name="loanName" placeholder="Name" required />
-                      </div> 
-                    </div>
+                  <label htmlFor="input-loan-index" className="col-sm-4 control-label">Index</label>
+                  <div className="col-sm-8">
+                    <input type="number" className="form-control" id="input-loan-index" name="loanIndex" placeholder="Index" required />
+                  </div> 
+                </div>
+                <div className="form-group">
+                  <label htmlFor="input-loan-name" className="col-sm-4 control-label">Name</label>
+                  <div className="col-sm-8">
+                    <input type="text" className="form-control" id="input-loan-name" name="loanName" placeholder="Name" required />
+                  </div> 
+                </div>
                 <div className="form-group">
                   <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
                   <div className="col-sm-8">

@@ -43,7 +43,7 @@ export default class Main extends Component {
     if (this.state.agentFilter != 'None') {
       const agent = Meteor.users.find({username: this.state.agentFilter}).fetch()[0];
       loanFilter.agentId = agent._id;
-      loans = Loans.find(loanFilter, {sort: {name: 1}}).fetch();
+      loans = Loans.find(loanFilter, {sort: {index: 1, name: 1}}).fetch();
     }
 
     return {
