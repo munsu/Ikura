@@ -62,7 +62,7 @@ export default class LoanDetailModal extends Component {
         <div className="modal-content">
           <div className="modal-header">
             <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 className="modal-title">{this.props.loan.clientName()}</h4>
+            <h4 className="modal-title">{this.props.loan.name}</h4>
           </div>
 
           <div className="modal-body row">

@@ -40,7 +40,7 @@ export default class LoanDetailModal2 extends Component {
 
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">{this.props.loan.clientName()}</h4>
+              <h4 className="modal-title">{this.props.loan.name}</h4>
             </div>
 
             <div className="modal-body row">
@@ -134,8 +134,7 @@ export default class LoanDetailModal2 extends Component {
             </div>
 
             <div className="modal-footer">
-              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+              <button type="button" className="btn btn-default" data-dismiss="modal">Close (Changes are saved automatically)</button>
             </div>
           </div>
         </div>

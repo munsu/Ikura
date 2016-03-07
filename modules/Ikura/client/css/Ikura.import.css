@@ -16,3 +16,56 @@
 .page-container {
     padding-top: 56px;
 }
+.page-container .alert {
+    margin-bottom: 6px;
+}
+
+#toast-container > div {
+    padding: 15px 15px 15px 15px;
+}
+.toast-success {
+    color: #3c763d;
+    background-color: #5cb85c;
+}
+.toast-warning {
+    color: #8a6d3b;
+    background-color: #f0ad4e;
+}
+#toast-container > .toast-info {
+    background-image: none !important;
+}
+#toast-container > .toast-error {
+    background-image: none !important;
+}
+#toast-container > .toast-success {
+    background-image: none !important;
+}
+#toast-container > .toast-warning {
+    background-image: none !important;
+}
+@media all and (max-width: 240px) {
+  #toast-container > div {
+    padding: 8px 8px 8px 8px;
+    width: 11em;
+  }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
+  }
+}
+@media all and (min-width: 241px) and (max-width: 480px) {
+  #toast-container > div {
+    padding: 8px 8px 8px 8px;
+    width: 18em;
+  }
+  #toast-container .toast-close-button {
+    right: -0.2em;
+    top: -0.2em;
+  }
+}
+@media all and (min-width: 481px) and (max-width: 768px) {
+  #toast-container > div {
+    padding: 15px 15px 15px 15px;
+    width: 25em;
+  }
+}

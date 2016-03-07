@@ -3,7 +3,7 @@ import { Component, PropTypes } from 'react';
 
 export default class LoanEnrollmentModal extends Component {
   static propTypes = {
-    clients: PropTypes.array.isRequired
+    agents: PropTypes.array.isRequired
   }
 
   computeInput(event) {
@@ -13,17 +13,6 @@ export default class LoanEnrollmentModal extends Component {
       // compute the readonly fields (amountFinanced, monthlyAmortization)
       form.amountFinanced.value = parseFloat(form.cashPrice.value) - parseFloat(form.downpayment.value);
       form.monthlyAmortization.value = ((parseFloat(form.amountFinanced.value) * 0.025 * parseFloat(form.terms.value)) + parseFloat(form.amountFinanced.value)) / parseFloat(form.terms.value);
-    } else if ('selectClient' === event.target.name) {
-      // show/hide the new client form
-      if (event.target.selectedIndex === 0) {
-        $('.collapse').collapse('show');
-        form.firstName.required = true;
-        form.lastName.required = true;
-      } else {
-        $('.collapse').collapse('hide');
-        form.firstName.required = false;
-        form.lastName.required = false;
-      }
     }
   }
 
@@ -32,24 +21,22 @@ export default class LoanEnrollmentModal extends Component {
     event.preventDefault();
 
     // Form values
+    const loanIndex = event.target.loanIndex.value;
+    const loanName = event.target.loanName.value;
+    const selectAgent = event.target.selectAgent.value;
     const cashPrice = event.target.cashPrice.value;
     const downpayment = event.target.downpayment.value;
     const amountFinanced = parseFloat(cashPrice) - parseFloat(downpayment);
     const terms = event.target.terms.value;
     const onTimePayment = event.target.onTimePayment.value;
     const firstPaymentDue = event.target.firstPaymentDue.value;
-
-    // new client
-    if (event.target.selectClient.selectedIndex === 0){
-      const firstName = event.target.firstName.value;
-      const lastName = event.target.lastName.value;
-      const selectAgent = event.target.selectAgent.value;
-      Meteor.call('addClient', selectAgent, firstName, lastName, (error, result) =>
-        Meteor.call('addLoan', result, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue));
-    } else {
-      const selectClient = event.target.selectClient.value;
-      Meteor.call('addLoan', selectClient, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue);
-    }
+    Meteor.call('addLoan', loanIndex, loanName, selectAgent, cashPrice, downpayment, amountFinanced, terms, onTimePayment, firstPaymentDue, function(error, result) {
+      if (error){
+        toastr.warning('<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> Failed to create new loan.');
+      } else {
+        toastr.success('<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span> Created new loan, ' + loanIndex + ' ' + loanName + '.');
+      }
+    });
 
     // Reset form
     event.target.reset();
@@ -69,45 +56,28 @@ export default class LoanEnrollmentModal extends Component {
 
             <div className="modal-body">
               <form className="form-horizontal" id="newLoanForm" onChange={this.computeInput.bind(this)} onSubmit={this.handleSubmit.bind(this)}>
-                {/* Client */}
+                {/* Loan */}
                 <div className="form-group">
-                  <label htmlFor="select-client" className="col-sm-4 control-label">Client</label>
+                  <label htmlFor="input-loan-index" className="col-sm-4 control-label">Index</label>
                   <div className="col-sm-8">
-                    <select className="form-control" id="select-client" name="selectClient">
-                      <option value="new">New Client</option>
-                      {this.props.clients.map(client =>
-                        <option key={client._id} value={client._id}>{client.name()}</option>)}
+                    <input type="number" className="form-control" id="input-loan-index" name="loanIndex" placeholder="Index" required />
+                  </div> 
+                </div>
+                <div className="form-group">
+                  <label htmlFor="input-loan-name" className="col-sm-4 control-label">Name</label>
+                  <div className="col-sm-8">
+                    <input type="text" className="form-control" id="input-loan-name" name="loanName" placeholder="Name" required />
+                  </div> 
+                </div>
+                <div className="form-group">
+                  <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
+                  <div className="col-sm-8">
+                    <select className="form-control" id="select-agent" name="selectAgent">
+                      {this.props.agents.map(agent =>
+                        <option key={agent._id} value={agent._id}>{agent.username}</option>)}
                     </select>
                   </div> 
                 </div>
-                <div className="collapse in" id="clientCollapse">
-                  <div className="well">
-                    <div className="form-group">
-                      <label htmlFor="input-first-name" className="col-sm-4 control-label">First Name</label>
-                      <div className="col-sm-8">
-                        <input type="text" className="form-control" id="input-first-name" name="firstName" placeholder="First Name" required />
-                      </div> 
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="input-last-name" className="col-sm-4 control-label">Last Name</label>
-                      <div className="col-sm-8">
-                        <input type="text" className="form-control" id="input-last-name" name="lastName" placeholder="Last Name" required />
-                      </div> 
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="select-agent" className="col-sm-4 control-label">Agent</label>
-                      <div className="col-sm-8">
-                        <select className="form-control" id="select-agent" name="selectAgent">
-                          {Meteor.users.find().fetch().map(user =>
-                            <option key={user._id} value={user._id}>{user.username}</option>)}
-                        </select>
-                      </div> 
-                    </div>
-                  </div>
-                </div>
-
-                <hr />
-                {/* Loan */}
                 <div className="form-group">
                   <label htmlFor="input-cash-price" className="col-sm-4 control-label">Cash Price</label>
                   <div className="col-sm-8">

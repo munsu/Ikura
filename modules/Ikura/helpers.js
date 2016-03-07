@@ -1,15 +1,4 @@
-import Clients from 'Ikura/collections/Clients';
 import Loans from 'Ikura/collections/Loans';
-
-Clients.helpers({
-  name: function () {
-    if (this.firstName && this.lastName) {
-      return (this.firstName + " " + this.lastName);
-    } else {
-      return (this.identifierDump);
-    }
-  }
-});
 
 Loans.helpers({
   monthlyAmortization: function () {
@@ -31,19 +20,17 @@ Loans.helpers({
     }
     return moment(this.payments[this.payments.length - 1].date, "YYYY-MM").add(1, 'M').format("YYYY-MM");
   },
-  clientName: function () {
+  agentName: function () {
     try {
-      return Clients.findOne({_id: this.clientId}).name();
+      return Meteor.users.findOne({_id: this.agentId}).username;
     } catch (e) {
       return "Loading";
     }
   },
-  agentName: function () {
-    try {
-      const client = Clients.findOne({_id: this.clientId});
-      return Meteor.users.findOne({_id: client.agentId}).username;
-    } catch (e) {
-      return "Loading";
+  displayName: function () {
+    if (this.index) {
+      return (this.index + ' ' + this.name);
     }
+    return this.name;
   }
 });

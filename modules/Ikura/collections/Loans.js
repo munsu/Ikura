@@ -18,5 +18,10 @@ Loan
   - recorder
   - _id
 - isDone
+- client
+  - firstName
+  - lastName
+  - identifierDump
+- agentId
 ~ monthlyAmortization
 */
